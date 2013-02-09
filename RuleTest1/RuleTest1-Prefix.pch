@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'RuleTest1' target in the 'RuleTest1' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif
