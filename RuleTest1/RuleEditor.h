@@ -8,7 +8,17 @@
 
 #import <Cocoa/Cocoa.h>
 
+/* The only reason I have subsclassed NSRuleEditor is 
+  because I noticed the target action was not firing.
+  Is this a bug?
+ 
+  This subclass intercepts the -setAction:, -action
+  -setTarget: and -target methods and stores 'saved'
+  versions as instance variables. The saved version
+  are returned during target/action. It's very odd.
+*/
+
 @interface RuleEditor : NSRuleEditor
-@property (unsafe_unretained) SEL savedAction;
+@property (assign) SEL savedAction;
 @property (weak) id savedTarget;
 @end

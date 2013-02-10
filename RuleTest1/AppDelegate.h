@@ -7,14 +7,15 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "MainWindowController.h"
 #import "RuleEditor.h"
+
+/* Example code based on @kainjow http://forums.macrumors.com/showthread.php?t=948727 */
 
 @interface AppDelegate : NSObject <NSApplicationDelegate, NSRuleEditorDelegate>
 
 @property (assign) IBOutlet NSWindow *window;
 @property (strong) NSMutableArray *criteria;
 @property (weak) IBOutlet RuleEditor *editor;
-@property (weak) IBOutlet MainWindowController *windowController;
+- (IBAction)editorChanged:(id)sender;
 
 @end

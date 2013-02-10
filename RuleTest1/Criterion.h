@@ -5,6 +5,7 @@
 
 #import <Cocoa/Cocoa.h>
 
+/* Example code from @kainjow http://forums.macrumors.com/showthread.php?t=948727 */
 
 @interface Criterion : NSObject
 {

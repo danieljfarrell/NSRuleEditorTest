@@ -15,7 +15,6 @@
 		650BC88116C6460A008D186F /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 650BC87F16C6460A008D186F /* MainMenu.xib */; };
 		650BC88916C64685008D186F /* Criterion.m in Sources */ = {isa = PBXBuildFile; fileRef = 650BC88816C64685008D186F /* Criterion.m */; };
 		650BC88B16C64693008D186F /* TextField.xib in Resources */ = {isa = PBXBuildFile; fileRef = 650BC88A16C64693008D186F /* TextField.xib */; };
-		650BC89216C64895008D186F /* MainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 650BC89116C64895008D186F /* MainWindowController.m */; };
 		65204A5B16C6520C0077F3A8 /* RuleEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 65204A5A16C6520C0077F3A8 /* RuleEditor.m */; };
 /* End PBXBuildFile section */
 
@@ -36,8 +35,6 @@
 		650BC88716C64685008D186F /* Criterion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Criterion.h; sourceTree = "<group>"; };
 		650BC88816C64685008D186F /* Criterion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Criterion.m; sourceTree = "<group>"; };
 		650BC88A16C64693008D186F /* TextField.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextField.xib; sourceTree = "<group>"; };
-		650BC89016C64895008D186F /* MainWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainWindowController.h; sourceTree = "<group>"; };
-		650BC89116C64895008D186F /* MainWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainWindowController.m; sourceTree = "<group>"; };
 		65204A5916C6520C0077F3A8 /* RuleEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RuleEditor.h; sourceTree = "<group>"; };
 		65204A5A16C6520C0077F3A8 /* RuleEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RuleEditor.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -100,8 +97,6 @@
 				650BC87F16C6460A008D186F /* MainMenu.xib */,
 				65204A5916C6520C0077F3A8 /* RuleEditor.h */,
 				65204A5A16C6520C0077F3A8 /* RuleEditor.m */,
-				650BC89016C64895008D186F /* MainWindowController.h */,
-				650BC89116C64895008D186F /* MainWindowController.m */,
 				650BC88A16C64693008D186F /* TextField.xib */,
 				650BC87116C6460A008D186F /* Supporting Files */,
 			);
@@ -188,7 +183,6 @@
 				650BC87716C6460A008D186F /* main.m in Sources */,
 				650BC87E16C6460A008D186F /* AppDelegate.m in Sources */,
 				650BC88916C64685008D186F /* Criterion.m in Sources */,
-				650BC89216C64895008D186F /* MainWindowController.m in Sources */,
 				65204A5B16C6520C0077F3A8 /* RuleEditor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

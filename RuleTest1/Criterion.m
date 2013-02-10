@@ -5,6 +5,7 @@
 
 #import "Criterion.h"
 
+/* Example code from @kainjow http://forums.macrumors.com/showthread.php?t=948727 */
 
 @implementation Criterion
 
@@ -79,11 +80,10 @@
 {
 	NSNib *nib = [[NSNib alloc] initWithNibNamed:@"TextField" bundle:nil];
 	NSArray *objs = nil;
-	//[nib instantiateNibWithOwner:nil topLevelObjects:&objs];
     [nib instantiateWithOwner:nil topLevelObjects:&objs];
 	for (id obj in objs)
 		if ([obj isKindOfClass:[NSTextField class]]) {
-            NSLog(@"textfield responder %@", [(NSTextField*)obj nextResponder]);
+            //NSLog(@"textfield responder %@", [(NSTextField*)obj nextResponder]);
             return obj;
             
         }
