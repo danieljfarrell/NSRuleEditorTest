@@ -79,7 +79,7 @@
                                                                access the values using -displayValuesForRow:
                                                                without knowing this, how can we responds to 
                                                                user edits? */
-    
+
     [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
         NSLog(@"Display values for row #%ld:\n %@", idx, [ruleEditor displayValuesForRow:idx]); /* Is this really to row the user is editing? */
     }];
