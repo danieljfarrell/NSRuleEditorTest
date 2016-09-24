@@ -16,21 +16,15 @@
 + (id)criterion;
 + (id)criterionWithName:(NSString *)name;
 + (id)criterionWithName:(NSString *)name children:(id)children, ...;
++ (id)criterionWithName:(NSString *)name child:(id)child;
 
 @property (readwrite, copy) NSString *name;
 
 - (void)addChild:(id)child;
-- (NSUInteger)numberOfChildren;
-- (id)childAtIndex:(NSUInteger)index;
+
+- (NSUInteger)count;
+- (id)objectAtIndex:(NSUInteger)index;
 
 - (id)displayValue;
 
-@end
-
-
-@interface SeparatorCriterion : Criterion
-@end
-
-
-@interface TextFieldCriterion : Criterion
 @end
