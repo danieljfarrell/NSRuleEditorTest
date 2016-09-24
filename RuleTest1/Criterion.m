@@ -11,16 +11,6 @@
 
 @synthesize name;
 
-+ (id)criterion
-{
-	return [[self class] criterionWithName:nil children:nil];
-}
-
-+ (id)criterionWithName:(NSString *)name
-{
-	return [[self class] criterionWithName:name children:nil];
-}
-
 + (id)criterionWithName:(NSString *)name children:(id)children, ...
 {
 	Criterion *crit = [[[self class] alloc] init];
@@ -28,18 +18,18 @@
 	va_list ap;
 	va_start(ap, children);
 	for (id next = children; next; next = va_arg(ap, id))
-		[crit addChild:next];
+		[crit addObject:next];
 	va_end(ap);
 	return crit;
 }
 + (id)criterionWithName:(NSString *)name child:(id)child {
   Criterion *crit = [[[self class] alloc] init];
   crit.name = name;
-  [crit addChild:child];
+  [crit addObject:child];
   return crit;
 }
 
-- (void)addChild:(id)child
+- (void)addObject:(id)child
 {
 	if (!children)
 		children = [[NSMutableArray alloc] init];

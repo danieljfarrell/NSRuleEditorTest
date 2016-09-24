@@ -52,11 +52,11 @@
                                         children:@"Mail", @"Note", @"RSS", nil],
                              nil],
         [NSMenuItem separatorItem],
-        [Criterion criterionWithName:@"Message is Junk Mail"],
+        @"Message is Junk Mail",
         [NSMenuItem separatorItem],
         [Criterion criterionWithName:@"Account" children:
-                             [Criterion criterionWithName:@"steve@apple.com"],
-                             [Criterion criterionWithName:@"bill@microsoft.com"],
+                             @"steve@apple.com",
+                             @"bill@microsoft.com",
                              nil],
       nil];
     }
