@@ -11,16 +11,6 @@
 
 @synthesize name;
 
-+ (id)criterion
-{
-	return [[self class] criterionWithName:nil children:nil];
-}
-
-+ (id)criterionWithName:(NSString *)name
-{
-	return [[self class] criterionWithName:name children:nil];
-}
-
 + (id)criterionWithName:(NSString *)name children:(id)children, ...
 {
 	Criterion *crit = [[[self class] alloc] init];
@@ -28,25 +18,30 @@
 	va_list ap;
 	va_start(ap, children);
 	for (id next = children; next; next = va_arg(ap, id))
-		[crit addChild:next];
+		[crit addObject:next];
 	va_end(ap);
 	return crit;
 }
++ (id)criterionWithName:(NSString *)name child:(id)child {
+  Criterion *crit = [[[self class] alloc] init];
+  crit.name = name;
+  [crit addObject:child];
+  return crit;
+}
 
-
-- (void)addChild:(id)child
+- (void)addObject:(id)child
 {
 	if (!children)
 		children = [[NSMutableArray alloc] init];
 	[children addObject:child];
 }
 
-- (NSUInteger)numberOfChildren
+- (NSUInteger)count
 {
 	return [children count];
 }
 
-- (id)childAtIndex:(NSUInteger)index
+- (id)objectAtIndex:(NSUInteger)index
 {
 	return [children objectAtIndex:index];
 }
@@ -59,35 +54,6 @@
 - (NSString *)description
 {
 	return [[super description] stringByAppendingFormat:@" %@", [self displayValue]];
-}
-
-@end
-
-
-@implementation SeparatorCriterion
-
-- (id)displayValue
-{
-	return [NSMenuItem separatorItem];
-}
-
-@end
-
-
-@implementation TextFieldCriterion
-
-- (id)displayValue
-{
-	NSNib *nib = [[NSNib alloc] initWithNibNamed:@"TextField" bundle:nil];
-	NSArray *objs = nil;
-    [nib instantiateWithOwner:nil topLevelObjects:&objs];
-	for (id obj in objs)
-		if ([obj isKindOfClass:[NSTextField class]]) {
-            //NSLog(@"textfield responder %@", [(NSTextField*)obj nextResponder]);
-            return obj;
-            
-        }
-	return nil;
 }
 
 @end

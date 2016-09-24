@@ -13,35 +13,52 @@
 
 @implementation AppDelegate
 
+- (NSView *)makeTextField {
+#if 1
+    NSTextField *tf = [[NSTextField alloc] initWithFrame:NSMakeRect(0,0,60,19)];
+    tf.autoresizingMask |= NSViewWidthSizable; // no effect
+    tf.controlSize = NSControlSizeSmall;
+    tf.action = @selector(editorChanged:);
+    return tf;
+#else
+    NSNib *nib = [[NSNib alloc] initWithNibNamed:@"TextField" bundle:nil];
+    NSArray *objs = nil;
+    [nib instantiateWithOwner:nil topLevelObjects:&objs];
+    for (id obj in objs)
+        if ([obj isKindOfClass:[NSTextField class]]) {
+            //NSLog(@"textfield responder %@", [(NSTextField*)obj nextResponder]);
+            return obj;
+    }
+#endif
+  return nil;
+}
+
 - (id)init{
     self = [super init];
     if (self) {
         
-        _criteria = [[NSMutableArray alloc] init];
-        
-        [_criteria addObject:[Criterion criterionWithName:@"From" children:
-                             [Criterion criterionWithName:@"Contains" children:[TextFieldCriterion criterion], nil],
-                             [Criterion criterionWithName:@"Ends with" children:[TextFieldCriterion criterion], nil],
-                             nil]];
-        [_criteria addObject:[Criterion criterionWithName:@"To" children:
-                             [Criterion criterionWithName:@"Contains" children:[TextFieldCriterion criterion], nil],
-                             [Criterion criterionWithName:@"Ends with" children:[TextFieldCriterion criterion], nil],
-                             nil]];
-        [_criteria addObject:[SeparatorCriterion criterion]];
-        [_criteria addObject:[Criterion criterionWithName:@"Message Type" children:
-                             [Criterion criterionWithName:@"is" children:
-                              [Criterion criterionWithName:@"Mail"],
-                              [Criterion criterionWithName:@"Note"],
-                              [Criterion criterionWithName:@"RSS"],
-                              nil],
-                             nil]];
-        [_criteria addObject:[SeparatorCriterion criterion]];
-        [_criteria addObject:[Criterion criterionWithName:@"Message is Junk Mail"]];
-        [_criteria addObject:[SeparatorCriterion criterion]];
-        [_criteria addObject:[Criterion criterionWithName:@"Account" children:
-                             [Criterion criterionWithName:@"steve@apple.com"],
-                             [Criterion criterionWithName:@"bill@microsoft.com"],
-                             nil]];
+        _criteria = [Criterion criterionWithName:@"ROOT" children:        
+        [Criterion criterionWithName:@"From" children:
+                             [Criterion criterionWithName:@"Contains"  child:[self makeTextField]],
+                             [Criterion criterionWithName:@"Ends with" child:[self makeTextField]],
+                             nil],
+        [Criterion criterionWithName:@"To" children:
+                             [Criterion criterionWithName:@"Contains"  child:[self makeTextField]],
+                             [Criterion criterionWithName:@"Ends with" child:[self makeTextField]],
+                             nil],
+        [NSMenuItem separatorItem],
+        [Criterion criterionWithName:@"Message Type" children:
+                             [Criterion criterionWithName:@"is"
+                                        children:@"Mail", @"Note", @"RSS", nil],
+                             nil],
+        [NSMenuItem separatorItem],
+        @"Message is Junk Mail",
+        [NSMenuItem separatorItem],
+        [Criterion criterionWithName:@"Account" children:
+                             @"steve@apple.com",
+                             @"bill@microsoft.com",
+                             nil],
+      nil];
     }
     return self;
 }
@@ -53,20 +70,24 @@
 }
 
 
-- (NSInteger)ruleEditor:(NSPredicateEditor *)editor numberOfChildrenForCriterion:(id)criterion withRowType:(NSRuleEditorRowType)rowType {
-	if (criterion == nil)
-		return [_criteria count];
-	return [criterion numberOfChildren];
+- (NSInteger)ruleEditor:(NSPredicateEditor *)editor numberOfChildrenForCriterion:(id)_parent withRowType:(NSRuleEditorRowType)rowType {
+    id parent = _parent ?: self->_criteria;
+    if (![parent respondsToSelector:@selector(count)])
+        return 0;
+    return [parent count];
 }
 
-- (id)ruleEditor:(NSPredicateEditor *)editor child:(NSInteger)index forCriterion:(id)criterion withRowType:(NSRuleEditorRowType)rowType {
-	if (criterion == nil)
-		return [_criteria objectAtIndex:index];
-	return [criterion childAtIndex:index];
+- (id)ruleEditor:(NSPredicateEditor *)editor child:(NSInteger)index forCriterion:(id)_parent withRowType:(NSRuleEditorRowType)rowType {
+    id parent = _parent ?: self->_criteria;
+    if (![parent respondsToSelector:@selector(objectAtIndex:)])
+        return nil; // has no children
+    return [parent objectAtIndex:index];
 }
 
 - (id)ruleEditor:(NSPredicateEditor *)editor displayValueForCriterion:(id)criterion inRow:(NSInteger)row {
-	return [criterion displayValue];
+    if ([criterion respondsToSelector:@selector(displayValue)])
+        return [criterion displayValue];
+    return criterion;
 }
 
 
@@ -81,7 +102,8 @@
                                                                user edits? */
 
     [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
-        NSLog(@"Display values for row #%ld:\n %@", idx, [ruleEditor displayValuesForRow:idx]); /* Is this really to row the user is editing? */
+        NSLog(@"Display values for row #%ld:\n %@", idx,
+              [ruleEditor displayValuesForRow:idx]); /* Is this really to row the user is editing? */
     }];
     
     if ([indexes count] == 0) {
@@ -94,7 +116,6 @@
    called when the editor changes a value. We also connect
    the textfield to this method */
 - (IBAction)editorChanged:(id)sender {
-    
     NSLog(@"%s", __PRETTY_FUNCTION__);
     if ([sender isKindOfClass:[NSTextField class]]) {
         NSTextField *textField = sender;
@@ -105,4 +126,5 @@
         NSLog(@"RuleEditor fired target/action");
     }
 }
+
 @end
